@@ -1,4 +1,4 @@
-# How to load the project
+## How to load the project
 
 Clone this [repo](https://github.com/rahul2983/frontend-nanodegree-feedreader.git) locally and open the `index.html` file in the browser to load the project. For more info on how the page loads you can always check out the HTML (**./index.html**), CSS (**./css/style.css**) and JavaScript (**./js/app.js**) files.
 
