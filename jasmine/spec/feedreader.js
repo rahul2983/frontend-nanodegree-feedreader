@@ -40,7 +40,7 @@ $(function() {
       */
     it('have a non-empy name defined for each feed', function() {
       allFeeds.forEach(function(feed) {
-        expect(feed.url).toBeTruthy();
+        expect(feed.name).toBeTruthy();
       });
     });
   });
@@ -59,15 +59,6 @@ $(function() {
 
     it('is hidden by default', function() {
       expect(defaultMenuItem).toBe(true);
-      
-      // Click on Menu Button and capture the Menu item Class
-      $('.menu-icon-link').click();
-      firstTimeMenuItemClicked = $('body').hasClass('menu-hidden');
-
-      // Click on Menu Item again and again capture the Menu Item Class
-      $('.menu-icon-link').click();
-      secondTimeMenuItemClicked = $('body').hasClass('menu-hidden');
-
     });
 
     /* This test ensures the menu changes
@@ -76,6 +67,14 @@ $(function() {
       * clicked and does it hide when clicked again.
       */
     it('changes visibility when clicked', function() {
+      // Click on Menu Button and capture the Menu item Class
+      $('.menu-icon-link').click();
+      firstTimeMenuItemClicked = $('body').hasClass('menu-hidden');
+
+      // Click on Menu Item again and again capture the Menu Item Class
+      $('.menu-icon-link').click();
+      secondTimeMenuItemClicked = $('body').hasClass('menu-hidden');
+
       expect(firstTimeMenuItemClicked).toBe(false);
       expect(secondTimeMenuItemClicked).toBe(true);
     });
@@ -94,9 +93,8 @@ $(function() {
       });
     });
 
-    it('should have at least one entry', function(done) {
-      expect($('.entry-link .entry').length).not.toBe(0);
-      done();
+    it('should have at least one entry', function() {
+      expect($('.feed .entry').length).not.toBe(0);
     });
      
   });
@@ -106,24 +104,25 @@ $(function() {
     /* This test ensures that when a new feed is loaded
       * by the loadFeed function that the content actually changes
       */
-    var initialContent = [], nextContent = [];
+    var initialContent, nextContent;
     
     beforeEach(function(done) {
       // Capture the initial content on the page when it loads with first item in allFeeds
-      loadFeed(0);
-      $('.entry').each(function() {
-        initialContent.push($('.feed').html());
-      });
-
-      // Call the API to load the page with second item in allFeeds
-      loadFeed(1, function() {
-        done();
+      loadFeed(0, function() {
+        $('.entry').each(function() {
+          initialContent = $('.feed').html();
+        });
+  
+        // Call the API to load the page with second item in allFeeds
+        loadFeed(1, function() {
+          done();
+        });
       });
     });
 
     it('should have changed content when new feed is loaded', function(done) {  
       $('.entry').each(function() {
-        nextContent.push($('.feed').html());
+        nextContent = $('.feed').html();
       });
       expect(JSON.stringify(initialContent)).not.toBe(JSON.stringify(nextContent));
       done();
