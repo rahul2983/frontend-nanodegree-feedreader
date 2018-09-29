@@ -107,15 +107,14 @@ $(function() {
     var initialContent, nextContent;
     
     beforeEach(function(done) {
+      // Define the function to call the API to load the page with second item in allFeeds
+      nextLoadFeed = loadFeed(1, function() {
+        done();
+      });
       // Capture the initial content on the page when it loads with first item in allFeeds
-      loadFeed(0, function() {
+      loadFeed(0, function(nextLoadFeed) {
         $('.entry').each(function() {
           initialContent = $('.feed').html();
-        });
-  
-        // Call the API to load the page with second item in allFeeds
-        loadFeed(1, function() {
-          done();
         });
       });
     });
